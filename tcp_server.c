@@ -19,7 +19,7 @@ int main(void)
 		return -1;
 	}
 
-	printf("socket created!");
+	printf("socket created!\n");
 
 	struct sockaddr_in sock_addr;
 	sock_addr.sin_family = AF_INET;
