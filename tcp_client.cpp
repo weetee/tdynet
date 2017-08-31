@@ -52,7 +52,7 @@ int main(void)
 		cout << "input some message: ";
 		string msg;
 		cin >> msg;
-		err = send(cli_sock, msg.c_str(), (socklen_t)msg.size());
+		err = send(cli_sock, msg.c_str(), (socklen_t)msg.size(), 0);
 		if (err < 0)
 		{
 			cout << "Error: send message failed!" << endl;
