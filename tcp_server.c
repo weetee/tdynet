@@ -53,17 +53,18 @@ int main(void)
 		}
 		while (1)
 		{
-			if (recv(conn_sock, &recv_buff, MAX_BUFFSIXE, 0) < 0)
+			int ret = recv(conn_sock, &recv_buff, MAX_BUFFSIXE, 0);
+			if (ret > 0)
+			{
+				printf("received data: %s\n", recv_buff);
+			}
+			else
 			{
 				char * str = strerror(errno);
 				perror(str);
 				printf("recv data error!\n");
 				close(conn_sock);
 				break;
-			}
-			else
-			{
-				printf("received data %s\n", recv_buff);
 			}
 		}
 	 }
