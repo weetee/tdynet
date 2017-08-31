@@ -43,6 +43,7 @@ int main(void)
 	char recv_buff[MAX_BUFFSIXE];
 	while (1)
 	{
+		printf("wait for connect ... \n");
 		struct sockaddr_in client_addr;
 		socklen_t cli_len = sizeof(struct sockaddr_in);
 		int conn_sock = accept(listen_sock, (struct sockaddr *)&client_addr, cli_len);
