@@ -18,7 +18,7 @@ int main(void)
 	cout << "Enter the IP address to connect to: ";
 	cin >> ip;
 	//转换ip
-	unsigned long ip_addr = inet_addr(ip);
+	unsigned long ip_addr = inet_addr(ip.c_str());
 	if (ip_addr < 0)
 	{
 		cout << "Error: invalid IP address" << endl;
@@ -52,7 +52,7 @@ int main(void)
 		cout << "input some message: ";
 		string msg;
 		cin >> msg;
-		err = send(cli_sock, msg.c_str(), msg.size());
+		err = send(cli_sock, msg.c_str(), (socklen_t)msg.size());
 		if (err < 0)
 		{
 			cout << "Error: send message failed!" << endl;
