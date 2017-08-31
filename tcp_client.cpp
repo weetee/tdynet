@@ -54,9 +54,14 @@ int main(void)
 		cin >> msg;
 
 		err = send(cli_sock, msg, strlen(msg) + 1, 0);
-		if (err < 0)
+		if (err == -1)
 		{
 			cout << "Error: send message failed!" << endl;
+			return -1;
+		}
+		if (strcmp(msg, "quit") == 0)
+		{
+			break;
 		}
 	}
 	close(cli_sock);
