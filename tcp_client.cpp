@@ -46,13 +46,14 @@ int main(void)
 		return -1;
 	}
 
+	char msg[MAX_BUFFSIXE];
 	cout << "Begin send message..." << endl;
 	while (1)
 	{
 		cout << "input some message: ";
-		string msg;
 		cin >> msg;
-		err = send(cli_sock, msg.c_str(), (socklen_t)msg.size(), 0);
+
+		err = send(cli_sock, msg, strlen(msg) + 1, 0);
 		if (err < 0)
 		{
 			cout << "Error: send message failed!" << endl;

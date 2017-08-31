@@ -41,26 +41,32 @@ int main(void)
 	}
 
 	char recv_buff[MAX_BUFFSIXE];
-	while (1)
-	{
+	 while (1)
+	 {
 		printf("wait for connect ... \n");
 		struct sockaddr_in client_addr;
 		socklen_t cli_len = sizeof(struct sockaddr_in);
-		int conn_sock = accept(listen_sock, (struct sockaddr *)&client_addr, cli_len);
+		int conn_sock = accept(listen_sock, (struct sockaddr *)&client_addr, &cli_len);
 		if (conn_sock < 0 )
 		{
 			printf("accept socket error!\n");
 		}
-		if (recv(conn_sock, &recv_buff, MAX_BUFFSIXE, 0) < 0)
+		while (1)
 		{
-			printf("recv data error!\n");
+			if (recv(conn_sock, &recv_buff, MAX_BUFFSIXE, 0) < 0)
+			{
+				char * str = strerror(errno);
+				perror(str);
+				printf("recv data error!\n");
+				close(conn_sock);
+				break;
+			}
+			else
+			{
+				printf("received data %s\n", recv_buff);
+			}
 		}
-		else
-		{
-			printf("received data %s\n", recv_buff);
-		}
-		close(conn_sock);
-	}
+	 }
 	close(listen_sock);
 
 	exit(0);
