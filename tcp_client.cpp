@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 #define MAX_BUFFSIXE	1024
@@ -51,7 +52,7 @@ int main(void)
 		cout << "input some message: ";
 		string msg;
 		cin >> msg;
-		err = send(cli_sock, msg, msg.size());
+		err = send(cli_sock, msg.c_str(), msg.size());
 		if (err < 0)
 		{
 			cout << "Error: send message failed!" << endl;
