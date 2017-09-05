@@ -10,7 +10,7 @@ class Socket
 {
 public:
 	//获取套接字
-	pid_t GetSock() const
+	sock_t GetSock() const
 	{
 		return m_sock;
 	}
@@ -30,15 +30,15 @@ public:
 	//关闭套接字
 	void Close();
 
-	//设置套接字是否阻塞
-	void SetBlocking(bool p_block_mode);
+	//设置套接字是否阻塞, 成功返回0，出错返回-1
+	int SetBlocking(bool p_block_mode);
 
 protected:
 	//构造函数
-	Socket(pid_t p_sock = -1);
+	Socket(sock_t p_sock = -1);
 
 	//数据
-	pid_t m_sock;
+	sock_t m_sock;
 	struct sockaddr_in m_local_info;
 	bool m_is_blocking;
 };
@@ -47,7 +47,7 @@ protected:
 class DataSocket : public Socket
 {
 public:
-	DataSocket(pid_t p_sock = -1);
+	DataSocket(sock_t p_sock = -1);
 
 	//获取对端地址
 	uint64_t GetRemoteAddress() const
@@ -82,6 +82,25 @@ public:
 private:
 	bool m_connected;
 	struct sockaddr_in m_remote_info;
+};
+
+
+//监听套接字
+class ListenSocket : public Socket
+{
+public:
+	ListenSocket();
+
+	void Listen(uint16_t p_port);
+	DataSocket Accept();
+	bool IsListening() const
+	{
+		return m_listening;
+	}
+	void Close();
+
+private:
+	bool m_listening;
 };
 
 

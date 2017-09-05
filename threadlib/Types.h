@@ -11,7 +11,7 @@
 
 namespace tdy
 {
-
+	typedef int sock_t;
 }	//namespace tdy end
 
 
