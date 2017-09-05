@@ -2,6 +2,20 @@
 
 using namespace tdy
 {
+
+	// Socket class
+	Socket::Socket(sock_t p_sock) : m_sock(p_sock)
+	{
+		if (p_sock != -1)
+		{
+			socklen_t addr_len = sizeof(m_local_info);
+			getsockname(p_sock, (sockaddr *)(&m_local_info), &addr_len);
+		}
+		
+		//默认设置为阻塞
+		m_is_blocking = true;
+	}
+
 	void Socket::Close()
 	{
 		close(m_sock);
@@ -30,15 +44,11 @@ using namespace tdy
 		return 0;
 	}
 
-	Socket::Socket(sock_t p_sock) : m_sock(p_sock)
+
+	//DataSocket class
+	DataSocket::DataSocket(sock_t p_sock)
+		: Socket(p_sock), m_connected(false)
 	{
-		if (p_sock != -1)
-		{
-			socklen_t s_len = sizeof(m_local_info);
-			getsockname(p_sock, (sockaddr *)(&m_local_info), &s_len);
-		}
-		
-		//默认设置为阻塞
-		m_is_blocking = true;
+
 	}
 }
