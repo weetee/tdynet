@@ -68,7 +68,7 @@ public:
 	}
 
 	//连接
-	void Connect(uint64_t p_addr, uint16_t p_port);
+	int Connect(uint64_t p_addr, uint16_t p_port);
 
 	//发送数据
 	int Send(const char *p_buf, int p_size);
@@ -89,9 +89,9 @@ private:
 class ListenSocket : public Socket
 {
 public:
-	ListenSocket();
+	ListenSocket() : m_listening(false) {}
 
-	void Listen(uint16_t p_port);
+	int Listen(uint16_t p_port);
 	DataSocket Accept();
 	bool IsListening() const
 	{
