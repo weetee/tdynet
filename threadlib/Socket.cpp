@@ -49,6 +49,45 @@ using namespace tdy
 	DataSocket::DataSocket(sock_t p_sock)
 		: Socket(p_sock), m_connected(false)
 	{
+		if (p_sock != -1)
+		{
+			socklen_t addr_len = sizeof(m_remote_info);
+			getpeername(p_sock, (sockaddr *)(&m_remote_info), &addr_len);
+			m_connected = true;
+		}
+	}
 
+	int DataSocket::Connect(uint64_t p_addr, uint16_t p_port)
+	{
+		if (m_connected)
+		{
+			cout << "this data socket already in connected..." << endl;
+			return -1;
+		}
+
+		if (m_sock == -1)
+		{
+			m_sock = socket(AF_INET, SOCK_STREAM, IPPROTE_TCP);
+			if (m_sock == -1)
+			{
+				cout << "create data socket error!" << endl;
+				return -1;
+			}
+		}
+
+		m_remote_info.sin_family = AF_INET;
+		m_remote_info.sin_port = htons(p_port);
+		m_remote_info.sin_addr.s_addr = p_addr;
+		bzero(&(m_remote_info.sin_zero), 8);
+
+		socklen_t addr_len = sizeof(sockaddr);
+		int err = connect(m_sock, (struct sockaddr *)(&m_remote_info), addr_len);
+		if (err == -1)
+		{
+			cout << "connect data socket error!" << endl;
+			return -1;
+		}
+
+		m_connected = true;
 	}
 }
