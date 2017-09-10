@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 typedef int sock_t;	//套接字类型
 
